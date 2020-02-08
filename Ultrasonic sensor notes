@@ -1,0 +1,5 @@
+Ultrasonic Sensor Notes (Datasheet: https://cdn.sparkfun.com/datasheets/Sensors/Proximity/HCSR04.pdf):
+
+	- Set trigger = echo = low to initialize sensor.
+	- Supply 10 microsecond pulse to trigger input to start sensing distance. If we want to measure time, start the Raspberry PI timer here as well. Stop timer when we receive rising edge of echo signal. Echo pulse times out after 38 milliseconds if no object detected.
+	- Distance in meters = ((echo time - trigger time) seconds * 340 meters/second)/2.
