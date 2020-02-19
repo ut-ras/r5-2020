@@ -16,6 +16,7 @@ Notes:
         set_speed(duty)
         drive_forward(ms)
         ...
+        shutdown()
 
 """
 import pins as p
