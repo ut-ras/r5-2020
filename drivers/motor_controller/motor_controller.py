@@ -14,7 +14,7 @@ Notes:
     * Proposed operation:
         setup()
         set_speed(duty)
-        drive_forward(ms)
+        drive_forward(s)
         ...
         shutdown()
 
@@ -80,7 +80,7 @@ INA | INB | Function
 """
 
 # All wheels go forward; CW or CCW depends on left or right side.
-def drive_forward(ms):
+def drive_forward(s):
     # left side goes clockwise
     # right side goes counter clockwise
     on = [
@@ -97,11 +97,11 @@ def drive_forward(ms):
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
-    event.wait(ms)
+    event.wait(s)
     stop()
 
 # All wheels go backward; CW or CCW depends on left or right side.
-def drive_backward(ms):
+def drive_backward(s):
     # left side goes counter clockwise
     # right side goes clockwise
     off = [
@@ -118,11 +118,11 @@ def drive_backward(ms):
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
-    event.wait(ms)
+    event.wait(s)
     stop()
 
 # Base moves to the right until stopped.
-def drive_right(ms):
+def drive_right(s):
     on = [
         p.INA1, # front side
         p.INA2,
@@ -137,11 +137,11 @@ def drive_right(ms):
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
-    event.wait(ms)
+    event.wait(s)
     stop()
 
 # Base moves to the left until stopped.
-def drive_left(ms):
+def drive_left(s):
     off = [
         p.INA1, # front side
         p.INA2,
@@ -156,11 +156,11 @@ def drive_left(ms):
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
-    event.wait(ms)
+    event.wait(s)
     stop()
 
 # Base moves forward left until stopped.
-def drive_forward_left(ms):
+def drive_forward_left(s):
     on = [
         p.INB1,
         p.INA3
@@ -175,11 +175,11 @@ def drive_forward_left(ms):
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
-    event.wait(ms)
+    event.wait(s)
     stop()
 
 # Base moves forward right until stopped.
-def drive_forward_right(ms):
+def drive_forward_right(s):
     on = [
         p.INA2,
         p.INB4
@@ -194,11 +194,11 @@ def drive_forward_right(ms):
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
-    event.wait(ms)
+    event.wait(s)
     stop()
 
 # Base moves backward left until stopped.
-def drive_backward_left(ms):
+def drive_backward_left(s):
     on = [
         p.INB2,
         p.INA4
@@ -213,11 +213,11 @@ def drive_backward_left(ms):
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
-    event.wait(ms)
+    event.wait(s)
     stop()
 
 # Base moves backward right until stopped.
-def drive_backward_right(ms):
+def drive_backward_right(s):
     on = [
         p.INA1,
         p.INB3
@@ -232,7 +232,7 @@ def drive_backward_right(ms):
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
-    event.wait(ms)
+    event.wait(s)
     stop()
 
 # stops movement of motors by braking to GND TODO: determine whether braking to VCC is better
