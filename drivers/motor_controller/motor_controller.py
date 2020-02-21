@@ -23,7 +23,6 @@ import sys
 sys.path.append("..") # Adds higher directory to python modules path.
 import time
 import pins as p
-#import threading as t
 try:
     import RPi.GPIO as GPIO
 except RuntimeError:
@@ -52,7 +51,6 @@ pwm_list = [
 ]
 
 pwms = []
-#event = t.Event()
 
 # sets up the GPIO pins used for the motor controllers.
 def setup(freq):
@@ -65,6 +63,8 @@ def setup(freq):
 
 # cleans all channels touched by motor controller
 def shutdown():
+    for pwm in pwms:
+        pwm.stop()
     GPIO.cleanup(chan_list)
     GPIO.cleanup(pwm_list)
 
@@ -102,7 +102,6 @@ def drive_forward(s):
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
     time.sleep(s)
- #   event.wait(s)
     stop()
 
 # All wheels go backward; CW or CCW depends on left or right side.
@@ -124,7 +123,6 @@ def drive_backward(s):
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
     time.sleep(s)
- #   event.wait(s)
     stop()
 
 # Base moves to the right until stopped.
@@ -144,7 +142,6 @@ def drive_right(s):
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
     time.sleep(s)
- #   event.wait(s)
     stop()
 
 # Base moves to the left until stopped.
@@ -164,7 +161,6 @@ def drive_left(s):
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
     time.sleep(s)
- #   event.wait(s)
     stop()
 
 # Base moves forward left until stopped.
@@ -184,7 +180,6 @@ def drive_forward_left(s):
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
     time.sleep(s)
- #   event.wait(s)
     stop()
 
 # Base moves forward right until stopped.
@@ -204,7 +199,6 @@ def drive_forward_right(s):
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
     time.sleep(s)
- #   event.wait(s)
     stop()
 
 # Base moves backward left until stopped.
@@ -224,7 +218,6 @@ def drive_backward_left(s):
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
     time.sleep(s) 
-#   event.wait(s)
     stop()
 
 # Base moves backward right until stopped.
