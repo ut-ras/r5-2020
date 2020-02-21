@@ -19,7 +19,7 @@ MOTOR_PWM_DUTY=1.0
 
 m.setup(MOTOR_PWM_FREQ)
 m.set_speed(MOTOR_PWM_DUTY)
-m.drive_forward(1)
-m.drive_backward(1)
+#m.drive_forward(10)
+m.drive_backward(10)
 # add more commands here
 m.shutdown()

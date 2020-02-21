@@ -21,8 +21,9 @@ Notes:
 """
 import sys
 sys.path.append("..") # Adds higher directory to python modules path.
+import time
 import pins as p
-import threading as t
+#import threading as t
 try:
     import RPi.GPIO as GPIO
 except RuntimeError:
@@ -50,24 +51,27 @@ pwm_list = [
     p.PWM1_4
 ]
 
-pwm = None
-event = t.Event()
+pwms = []
+#event = t.Event()
 
 # sets up the GPIO pins used for the motor controllers.
 def setup(freq):
     GPIO.setup(chan_list, GPIO.OUT) # set all touched pins to output mode
     GPIO.setup(pwm_list, GPIO.OUT)  # set all touched pins to output mode
-    pwm = GPIO.PWM(pwm_list, freq) # set motor frequency
-    pwm.start(0.0) # set default duty cycle to 0.0
+    for pwm_chan in pwm_list:
+        pwms.append(GPIO.PWM(pwm_chan, freq)) # set motor frequency
+    for pwm in pwms:
+        pwm.start(0.0) # set default duty cycle to 0.0
 
 # cleans all channels touched by motor controller
 def shutdown():
-    GPIO.cleanup(chan_list, GPIO.OUT)
-    GPIO.cleanup(pwm_list, GPIO.OUT)
+    GPIO.cleanup(chan_list)
+    GPIO.cleanup(pwm_list)
 
 # sets the speed of the motors when enabled.
 def set_speed(duty):
-    pwm.ChangeDutyCycle(duty)
+    for pwm in pwms:
+        pwm.ChangeDutyCycle(duty)
 
 
 """
@@ -97,7 +101,8 @@ def drive_forward(s):
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
-    event.wait(s)
+    time.sleep(s)
+ #   event.wait(s)
     stop()
 
 # All wheels go backward; CW or CCW depends on left or right side.
@@ -118,7 +123,8 @@ def drive_backward(s):
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
-    event.wait(s)
+    time.sleep(s)
+ #   event.wait(s)
     stop()
 
 # Base moves to the right until stopped.
@@ -137,7 +143,8 @@ def drive_right(s):
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
-    event.wait(s)
+    time.sleep(s)
+ #   event.wait(s)
     stop()
 
 # Base moves to the left until stopped.
@@ -156,7 +163,8 @@ def drive_left(s):
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
-    event.wait(s)
+    time.sleep(s)
+ #   event.wait(s)
     stop()
 
 # Base moves forward left until stopped.
@@ -175,7 +183,8 @@ def drive_forward_left(s):
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
-    event.wait(s)
+    time.sleep(s)
+ #   event.wait(s)
     stop()
 
 # Base moves forward right until stopped.
@@ -194,7 +203,8 @@ def drive_forward_right(s):
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
-    event.wait(s)
+    time.sleep(s)
+ #   event.wait(s)
     stop()
 
 # Base moves backward left until stopped.
@@ -213,7 +223,8 @@ def drive_backward_left(s):
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
-    event.wait(s)
+    time.sleep(s) 
+#   event.wait(s)
     stop()
 
 # Base moves backward right until stopped.
@@ -232,11 +243,13 @@ def drive_backward_right(s):
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
-    event.wait(s)
+ #   event.wait(s)
+    time.sleep(s)
     stop()
 
 # stops movement of motors by braking to GND TODO: determine whether braking to VCC is better
 def stop():
     GPIO.output(chan_list, GPIO.LOW)
-    pwm.stop()
+    for pwm in pwms:
+        pwm.stop()
 
