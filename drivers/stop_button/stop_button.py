@@ -17,24 +17,22 @@ import sys
 sys.path.append("..") # Adds higher directory to python modules path.
 import pins as p
 import config as c
-#import threading as t
 try:
     import RPi.GPIO as GPIO
 except RuntimeError:
     print("Error importing RPi.GPIO! Try using sudo privileges.")
 
-# TODO: for testing purposes, set button and LED to GPIO 15, 14. 
+# TODO: for testing purposes, set button to GPIO 14. 
 # Make sure that the default pull according to the rpi datasheet is pull down low.
-PIN_SW=15
+PIN_SW=p.STOP_SW
 PIN_LED=14
 
 GPIO.setmode(GPIO.BCM) # pin values correspond to GPIO pin number on board
 GPIO.setwarnings(False) # disable warnings from other drivers configuring other pins
 
-#event = t.Event()
 # sets up the GPIO pins used for the button.
 def setup():
-    print("Setup.")
+    print("Setup Emergency Stop Button.")
     GPIO.setup(PIN_SW,  GPIO.IN,  pull_up_down=GPIO.PUD_DOWN) # Set pin 9 to be an input pin (switch)
     GPIO.setup(PIN_LED, GPIO.OUT) # Set pin 10 to be an output pin (LED)
 
