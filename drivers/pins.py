@@ -40,13 +40,31 @@ INB4 = 21      # IN B port on Motor Driver (4)
 """
 PWM pins
 """
-PWM0_1 = 18      # Motor Driver  (1)
-PWM0_3 = 12      # Motor Driver  (3)
-PWM1_2 = 13      # Motor Driver  (2)
-PWM1_4 = 19      # Motor Driver  (4)
+PWM0_1 = 18     # Motor Driver  (1)
+PWM0_3 = 12     # Motor Driver  (3)
+PWM1_2 = 13     # Motor Driver  (2)
+PWM1_4 = 19     # Motor Driver  (4)
+"""
+Servo Motor
+"""
+SERV0 = 25      # servo motor software defined PWM pin for the bin
+"""
+Motor MOSFETs
+"""
+M_DRUM = 17     # logic signal to the MOSFET enabling the drum motor.
+M_BELT = 27     # logic signal to the MOSFET enabling the conveyor belt motor.
+"""
+Emergency Stop Switch
+"""
+STOP_SW = 22    # When raised high, an interrupt stops all threads and polls until lowered again.
+"""
+Bonnet Pins
+"""
+BON_1 = 2       # TODO: define at a later time.
+BON_2 = 3
 
 """
-Encoder pins
+Encoder pins - TODO: subject to change for final pinout.
 """
 AOUT1 = 2       # Encoder AOUT (1)
 BOUT1 = 3       # Encoder BOUT (1)
@@ -57,3 +75,14 @@ BOUT3 = 22      # Encoder BOUT (3)
 AOUT4 = 10      # Encoder AOUT (4)
 BOUT4 = 9       # Encoder BOUT (4)
 
+"""
+Ultrasonic Sensor pins - TODO: subject to change for final pinout.
+"""
+ECHO_1 = 0      # TODO: define at a later time.
+TRIG_1 = 0
+ECHO_2 = 0
+TRIG_2 = 0
+ECHO_3 = 0
+TRIG_3 = 0
+ECHO_4 = 0
+TRIG_4 = 0
