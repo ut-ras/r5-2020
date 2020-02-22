@@ -53,6 +53,7 @@ pwms = []
 
 # sets up the GPIO pins used for the motor controllers.
 def setup(freq):
+    print("Setup Motor Controllers.")
     GPIO.setup(chan_list, GPIO.OUT) # set all touched pins to output mode
     GPIO.setup(pwm_list, GPIO.OUT)  # set all touched pins to output mode
     for pwm_chan in pwm_list:
@@ -242,5 +243,3 @@ def drive_backward_right(s):
 # stops movement of motors by braking to GND TODO: determine whether braking to VCC is better
 def stop():
     GPIO.output(chan_list, GPIO.LOW)
-    for pwm in pwms:
-        pwm.stop()

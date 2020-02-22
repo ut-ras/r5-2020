@@ -14,8 +14,8 @@ import encoders as e
 e.setup()
 input = input("Press enter to quit\n\n")
 e.read(0) # should return an error message
-e.read(1) # should return 0 since motor isn't moving.
+print(str(e.read(1))) # should return 0 since motor isn't moving.
 e.reset(0) # should return an error message
 e.reset(1) # should work. Read should be 0 now if it wasn't already.
-e.read(1)
+print(str(e.read(1)))
 e.shutdown()

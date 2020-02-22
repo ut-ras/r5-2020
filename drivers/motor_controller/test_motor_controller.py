@@ -19,9 +19,12 @@ MOTOR_PWM_DUTY=10.0
 
 m.setup(MOTOR_PWM_FREQ)
 # Test regime:
-for i in range(0, 10):
-    m.set_speed(MOTOR_PWM_DUTY*i)
-    m.drive_forward(5)
+#for i in range(0, 10):
+#    m.set_speed(MOTOR_PWM_DUTY*i)
+#    m.drive_forward(5)
+m.set_speed(MOTOR_PWM_DUTY*5)
+m.drive_backward(5)
+
 # m.drive_backward(10)
 # add more commands here
 m.shutdown()

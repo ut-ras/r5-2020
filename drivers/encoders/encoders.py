@@ -56,42 +56,50 @@ def shutdown():
 # increments a tick on the rising edge of an encoder pin.
 def encoderEventHandler(channel):
     if channel is p.AOUT1 or p.BOUT1:
+        global ENC1_count
         ENC1_count += 1
     elif channel is p.AOUT2 or p.BOUT2:
+        global ENC2_count
         ENC2_count += 1
     elif channel is p.AOUT3 or p.BOUT3:
+        global ENC3_count
         ENC3_count += 1
     elif channel is p.AOUT4 or p.BOUT4:
+        global ENC4_count
         ENC4_count += 1
     else:
-        print("Invalid channel: " + channel)
+        print("Invalid channel: " + str(channel))
 
 # read returns the ticks given the encoder id.
 # use: when you want to know ticks after moving (and therefore to calculate distance).
 def read(enc_val):
     if enc_val is 1:
         return ENC1_count
-    if enc_val is 2:
+    elif enc_val is 2:
         return ENC2_count
-    if enc_val is 3:
+    elif enc_val is 3:
         return ENC3_count
-    if enc_val is 4:
+    elif enc_val is 4:
         return ENC4_count
     else:
-        print("Invalid enc_val: " + enc_val)
+        print("Invalid read enc_val: " + str(enc_val))
         print("Choose a value between [1, 4].")
 
 # reset takes the given encoder id and resets its ticks.
 # use: when changing direction and ENCx_count is no longer useful.
 def reset(enc_val):
     if enc_val is 1:
+        global ENC1_count
         ENC1_count = 0
-    if enc_val is 2:
+    elif enc_val is 2:
+        global ENC2_count
         ENC2_count = 0
-    if enc_val is 3:
+    elif enc_val is 3:
+        global ENC3_count
         ENC3_count = 0
-    if enc_val is 4:
+    elif enc_val is 4:
+        global ENC4_count
         ENC4_count = 0
     else:
-        print("Invalid enc_val: " + enc_val)
+        print("Invalid reset enc_val: " + str(enc_val))
         print("Choose a value between [1, 4].")
