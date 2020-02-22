@@ -3,12 +3,11 @@ This file contains the interface for driving the VNH5019A-E motor driver.
 Filename: motor_controller.py
 Author: Matthew Yu
 Last Modified: 2/19/20
-Notes: 
+Notes:
     * How a Mecanum Drive Works: https://seamonsters-2605.github.io/archive/mecanum/
     * Driving a PWM pin in RPi.GPIO: https://sourceforge.net/p/raspberry-gpio-python/wiki/PWM/
     * Motor Driver data sheet and logic table: https://www.pololu.com/file/0J504/vnh5019.pdf
     * RPI4 R5 Moving Base Pinout: https://docs.google.com/spreadsheets/d/1HRyUoHULSqokP9kBjE0gk1rphJi5dLCR_PKfli7fx-g/edit#gid=1188077649
-    TODO: Update pins used after moving base checkpoint
     TODO: Figure out whether threading Event works properly
     TODO: Test movement, work towards getting a precise measurement of moving x units for having duty cycle y on for k time
     * Proposed operation:
@@ -217,7 +216,7 @@ def drive_backward_left(s):
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
-    time.sleep(s) 
+    time.sleep(s)
     stop()
 
 # Base moves backward right until stopped.
@@ -245,4 +244,3 @@ def stop():
     GPIO.output(chan_list, GPIO.LOW)
     for pwm in pwms:
         pwm.stop()
-
