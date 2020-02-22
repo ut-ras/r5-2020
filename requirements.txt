@@ -1,2 +1,4 @@
 # Vision
 opencv-python
+# Drivers
+RPi.GPIO
