@@ -243,7 +243,6 @@ def drive_backward_right(s):
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
- #   event.wait(s)
     time.sleep(s)
     stop()
 
@@ -257,7 +256,7 @@ Notes:
  * these methods are BLOCKING! Consider a multiprocessing approach: start a subprocess for each movement.
 """
 # All wheels go forward; CW or CCW depends on left or right side.
-# d in inches, double
+# d in cm, double
 def drive_forward_t(d):
     # left side goes clockwise
     # right side goes counter clockwise
@@ -275,7 +274,7 @@ def drive_forward_t(d):
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
-    target = 5*d # TODO: this value should change based on independent experiments.
+    target = c.TICKS_PER_CM*d # TODO: this value should change based on independent experiments.
     # poll until the avg ticks of all motors reaches expected tick count
     while(getAvgTicks() < target):
         pass

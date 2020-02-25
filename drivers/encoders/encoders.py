@@ -69,9 +69,9 @@ Massive change in resolution! If we are by a couple ticks, that means we may be 
 by several inches if we decide to only look at one encoder.
 
 To reduce this lack of resolution, we can use smaller mechanum wheels. Below
-are the resolutions for a 2in. radius wheel.
-12.57 * 22.5 / 360 = .786 in / tick
-12.57 * 5.625 / 360 = .196 in / tick
+are the resolutions for a 50mm. radius wheel (the one we are using).
+31.42 * 22.5 / 360 =  1.96 cm / tick
+31.42 * 5.625 / 360 = 0.49 cm / tick
 
 Obviously, real world results will vary, but I hope this is enough justification to:
     1 - take as much encoder resolution as you can
