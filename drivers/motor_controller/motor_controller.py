@@ -281,7 +281,7 @@ def drive_forward_t(d):
     stop()
 
 # All wheels go backward
-def drive_backward_t(t):
+def drive_backward_t(d):
     # left side goes counter clockwise
     # right side goes clockwise
     off = [
@@ -298,11 +298,14 @@ def drive_backward_t(t):
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
-    time.sleep(s)
+    target = c.TICKS_PER_CM*d # TODO: this value should change based on independent experiments.
+    # poll until the avg ticks of all motors reaches expected tick count
+    while(getAvgTicks() < target):
+        pass
     stop()
 
 # Base moves to the right until stopped.
-def drive_right_t(t):
+def drive_right_t(d):
     on = [
         p.INA1, # front side
         p.INA2,
@@ -317,11 +320,14 @@ def drive_right_t(t):
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
-    time.sleep(s)
+    target = c.TICKS_PER_CM*d # TODO: this value should change based on independent experiments.
+    # poll until the avg ticks of all motors reaches expected tick count
+    while(getAvgTicks() < target):
+        pass
     stop()
 
 # Base moves to the left until stopped.
-def drive_left_t(t):
+def drive_left_t(d):
     off = [
         p.INA1, # front side
         p.INA2,
@@ -336,11 +342,14 @@ def drive_left_t(t):
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
-    time.sleep(s)
+    target = c.TICKS_PER_CM*d # TODO: this value should change based on independent experiments.
+    # poll until the avg ticks of all motors reaches expected tick count
+    while(getAvgTicks() < target):
+        pass
     stop()
 
 # Base moves forward left until stopped.
-def drive_forward_left_t(t):
+def drive_forward_left_t(d):
     on = [
         p.INB1,
         p.INA3
@@ -355,11 +364,14 @@ def drive_forward_left_t(t):
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
-    time.sleep(s)
+    target = c.TICKS_PER_CM*d # TODO: this value should change based on independent experiments.
+    # poll until the avg ticks of all motors reaches expected tick count
+    while(getAvgTicks() < target):
+        pass
     stop()
 
 # Base moves forward right until stopped.
-def drive_forward_right_t(t):
+def drive_forward_right_t(d):
     on = [
         p.INA2,
         p.INB4
@@ -374,11 +386,14 @@ def drive_forward_right_t(t):
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
-    time.sleep(s)
+    target = c.TICKS_PER_CM*d # TODO: this value should change based on independent experiments.
+    # poll until the avg ticks of all motors reaches expected tick count
+    while(getAvgTicks() < target):
+        pass
     stop()
 
 # Base moves backward left until stopped.
-def drive_backward_left_t(t):
+def drive_backward_left_t(d):
     on = [
         p.INB2,
         p.INA4
@@ -393,11 +408,14 @@ def drive_backward_left_t(t):
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
-    time.sleep(s)
+    target = c.TICKS_PER_CM*d # TODO: this value should change based on independent experiments.
+    # poll until the avg ticks of all motors reaches expected tick count
+    while(getAvgTicks() < target):
+        pass
     stop()
 
 # Base moves backward right until stopped.
-def drive_backward_right_t(t):
+def drive_backward_right_t(d):
     on = [
         p.INA1,
         p.INB3
@@ -412,8 +430,10 @@ def drive_backward_right_t(t):
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
- #   event.wait(s)
-    time.sleep(s)
+    target = c.TICKS_PER_CM*d # TODO: this value should change based on independent experiments.
+    # poll until the avg ticks of all motors reaches expected tick count
+    while(getAvgTicks() < target):
+        pass
     stop()
 
 # assuming we only move in cardinal and extracardinal ways
