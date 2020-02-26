@@ -26,14 +26,10 @@ GPIO.setwarnings(False) # disable warnings from other drivers configuring other 
 
 # list of channels touched by encoders.
 chan_list = [
-    p.AOUT1,
-    p.BOUT1,
-    p.AOUT2,
-    p.BOUT2,
-    p.AOUT3,
-    p.BOUT3,
-    p.AOUT4,
-    p.BOUT4
+    p.ENC_FR,
+    p.ENC_FL,
+    p.ENC_BL,
+    p.ENC_BR
 ]
 
 """
@@ -47,7 +43,6 @@ def setup():
     # declare a handler interrupt on input pin
     for channel in chan_list:
         GPIO.add_event_detect(channel, GPIO.RISING, callback=encoderEventHandler)
-        GPIO.add_event_detect(channel, GPIO.FALLING, callback=encoderEventHandler)
 # cleans all channels touched by motor controller
 def shutdown():
     print("Shutdown Encoders.")
@@ -56,39 +51,41 @@ def shutdown():
 """
 Say we have a 3in. radius wheel - the circumference is 18.85in.
 Consider if we only get 16 ticks per revolution (only rise/fall of one encoder).
-That is:  16 ticks      1 tick      360 degs
-            -----   =   ------   x   -----     = 0.85 ticks per in  = 1.176 in per tick
-          360 degs    22.5 degs     18.85 in
+We want to multiply the tick/degs by the motor gearing ratio (output ticks/degs).
+Now we want ticks/in - multiply the result by 360 degs/circumference.
+Flip it to get in/tick.
 
-Now consider 64 ticks per revolution (rise/fall of both encoders).
-That is:  64 ticks      1 tick      360 degs
-            -----   =   ------   x   -----     = 3.40 ticks per in  = 0.295 in per tick
-          360 degs    5.625 degs    18.85 in
+That is:  16 ticks      1 tick     102.08     360 degs
+            -----   =   ------   x ------- x  --------     = 86.646 ticks per in  = 0.0115 in per tick
+          360 degs     22.5 degs      1       18.85 in
 
-Massive change in resolution! If we are by a couple ticks, that means we may be off
-by several inches if we decide to only look at one encoder.
+If we upped the resolution to 64 ticks/resolution, you will notice that the in/tick will drop dramatically (by a factor of 4)!
 
-To reduce this lack of resolution, we can use smaller mechanum wheels. Below
-are the resolutions for a 50mm. radius wheel (the one we are using).
-31.42 * 22.5 / 360 =  1.96 cm / tick
-31.42 * 5.625 / 360 = 0.49 cm / tick
+The wheel radius for our robot has been determined to be 50 mm. Using the procedure above, we obtain the resolutions below.
 
-Obviously, real world results will vary, but I hope this is enough justification to:
+31.42 (circumference in cm) *  22.5  / 360 / 102.08 =  0.019 cm / tick  (.19 mm / tick)
+31.42 (circumference in cm) *  5.625 / 360 / 102.08 = 0.0049 cm / tick  (.048 mm / tick)
+
+It appears that with a 16 tick/resolution, we get a good accuracy. As a result, let's define our system to use the rising edge of one encoder for each motor (16 ticks/motor revolution).
+
+The next step is to test for precision.
+
+As an aside, real world results of the tick resolution accuracy can vary. As a general rule, you can get more resolution by:
     1 - take as much encoder resolution as you can
     2 - use small wheels! You may move slower, but you will move more accurately.
 """
 # increments a tick on the rising edge of an encoder pin.
 def encoderEventHandler(channel):
-    if channel is p.AOUT1 or p.BOUT1:
+    if channel is p.ENC_FR:
         global c.ENC1_count
         c.ENC1_count += 1
-    elif channel is p.AOUT2 or p.BOUT2:
+    elif channel is p.ENC_FL:
         global c.ENC2_count
         c.ENC2_count += 1
-    elif channel is p.AOUT3 or p.BOUT3:
+    elif channel is p.ENC_BL:
         global c.ENC3_count
         c.ENC3_count += 1
-    elif channel is p.AOUT4 or p.BOUT4:
+    elif channel is p.ENC_BR:
         global c.ENC4_count
         c.ENC4_count += 1
     else:
