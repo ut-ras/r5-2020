@@ -12,7 +12,7 @@ Notes:
         shutdown()
 
 """
-import motor_controller as m
+import motor_controller
 import config
 
 m.setup(config.MOTOR_PWM_FREQ)
