@@ -91,13 +91,13 @@ def encoderEventHandler(channel):
 # read returns the ticks given the encoder id.
 # use: when you want to know ticks after moving (and therefore to calculate distance).
 def read(enc_val):
-    if enc_val is 1:
+    if enc_val is config.FRONT_RIGHT:
         return config.ENC1_count
-    elif enc_val is 2:
+    elif enc_val is config.FRONT_LEFT:
         return config.ENC2_count
-    elif enc_val is 3:
+    elif enc_val is config.BACK_LEFT:
         return config.ENC3_count
-    elif enc_val is 4:
+    elif enc_val is config.BACK_RIGHT:
         return config.ENC4_count
     else:
         print("Invalid read enc_val: " + str(enc_val))
@@ -106,13 +106,13 @@ def read(enc_val):
 # reset takes the given encoder id and resets its ticks.
 # use: when changing direction and ENCx_count is no longer useful.
 def reset(enc_val):
-    if enc_val is 1:
+    if enc_val is config.FRONT_RIGHT:
         config.ENC1_count = 0
-    elif enc_val is 2:
+    elif enc_val is config.FRONT_LEFT:
         config.ENC2_count = 0
-    elif enc_val is 3:
+    elif enc_val is config.BACK_LEFT:
         config.ENC3_count = 0
-    elif enc_val is 4:
+    elif enc_val is config.BACK_RIGHT:
         config.ENC4_count = 0
     else:
         print("Invalid reset enc_val: " + str(enc_val))

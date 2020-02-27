@@ -22,15 +22,15 @@ m.set_speed(config.MOTOR_PWM_DUTY)
 
 # drive forward
 m.drive_forward(5) # 5 seconds
-print("Ticks: " + str(encoders.read(1))) # reading from encoder 1 (Front Right)
+print("Ticks: " + str(encoders.read(config.BACK_RIGHT))) # reading from encoder 1 (Front Right)
 
 # reset count
-encoders.reset(1)
-print("Ticks: " + str(encoders.read(1))) # should be reading 0 now
+encoders.reset(config.BACK_RIGHT)
+print("Ticks: " + str(encoders.read(config.BACK_RIGHT))) # should be reading 0 now
 
 # drive backward
 m.drive_backward(5)
-print("Ticks: " + str(encoders.read(1)))
+print("Ticks: " + str(encoders.read(config.BACK_RIGHT)))
 
 # shutdown
 encoders.shutdown()

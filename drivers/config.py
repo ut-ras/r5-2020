@@ -12,6 +12,11 @@ TICKS_PER_CM = 53 # see encoders.py, based on a 50mm. radius wheel and 64 ticks 
 MOTOR_PWM_FREQ=100 # change these
 MOTOR_PWM_DUTY=10.0
 
+FRONT_RIGHT=1
+FRONT_LEFT=2
+BACK_LEFT=3
+BACK_RIGHT=4
+
 emergency_stop = False      # determines whether the robot is in operation or halted.
 ENC1_count = 0
 ENC2_count = 0
