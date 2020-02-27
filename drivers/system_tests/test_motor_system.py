@@ -32,6 +32,12 @@ print("Ticks: " + str(encoders.read(config.BACK_RIGHT))) # should be reading 0 n
 m.drive_backward(5)
 print("Ticks: " + str(encoders.read(config.BACK_RIGHT)))
 
+# move fwd 5 cm
+encoders.reset(config.BACK_RIGHT)
+m.drive_forward(5)
+print("Ticks: " + str(encoders.read(config.BACK_RIGHT)))
+
+
 # shutdown
 encoders.shutdown()
 m.shutdown()

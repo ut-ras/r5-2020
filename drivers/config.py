@@ -18,7 +18,7 @@ BACK_LEFT=3
 BACK_RIGHT=4
 
 emergency_stop = False      # determines whether the robot is in operation or halted.
-ENC1_count = 0
-ENC2_count = 0
-ENC3_count = 0
-ENC4_count = 0
+ENC_FR_count = 0
+ENC_FL_count = 0
+ENC_BL_count = 0
+ENC_BR_count = 0

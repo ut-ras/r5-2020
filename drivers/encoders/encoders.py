@@ -77,13 +77,13 @@ As an aside, real world results of the tick resolution accuracy can vary. As a g
 # increments a tick on the rising edge of an encoder pin.
 def encoderEventHandler(channel):
     if channel is p.ENC_FR:
-        config.ENC1_count += 1
+        config.ENC_FR_count += 1
     elif channel is p.ENC_FL:
-        config.ENC2_count += 1
+        config.ENC_FL_count += 1
     elif channel is p.ENC_BL:
-        config.ENC3_count += 1
+        config.ENC_BL_count += 1
     elif channel is p.ENC_BR:
-        config.ENC4_count += 1
+        config.ENC_BR_count += 1
     else:
         print("Invalid channel: " + str(channel))
         print("Choose a value between [1, 4].")
@@ -92,13 +92,13 @@ def encoderEventHandler(channel):
 # use: when you want to know ticks after moving (and therefore to calculate distance).
 def read(enc_val):
     if enc_val is config.FRONT_RIGHT:
-        return config.ENC1_count
+        return config.ENC_FR_count
     elif enc_val is config.FRONT_LEFT:
-        return config.ENC2_count
+        return config.ENC_FL_count
     elif enc_val is config.BACK_LEFT:
-        return config.ENC3_count
+        return config.ENC_BL_count
     elif enc_val is config.BACK_RIGHT:
-        return config.ENC4_count
+        return config.ENC_BR_count
     else:
         print("Invalid read enc_val: " + str(enc_val))
         print("Choose a value between [1, 4].")
@@ -107,13 +107,13 @@ def read(enc_val):
 # use: when changing direction and ENCx_count is no longer useful.
 def reset(enc_val):
     if enc_val is config.FRONT_RIGHT:
-        config.ENC1_count = 0
+        config.ENC_FR_count = 0
     elif enc_val is config.FRONT_LEFT:
-        config.ENC2_count = 0
+        config.ENC_FL_count = 0
     elif enc_val is config.BACK_LEFT:
-        config.ENC3_count = 0
+        config.ENC_BL_count = 0
     elif enc_val is config.BACK_RIGHT:
-        config.ENC4_count = 0
+        config.ENC_BR_count = 0
     else:
         print("Invalid reset enc_val: " + str(enc_val))
         print("Choose a value between [1, 4].")
