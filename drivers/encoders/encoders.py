@@ -10,11 +10,36 @@ Notes:
         setup()
         ...
         shutdown()
+
+    Say we have a 3in. radius wheel - the circumference is 18.85in.
+    Consider if we only get 16 ticks per revolution (only rise/fall of one encoder).
+    We want to multiply the tick/degs by the motor gearing ratio (output ticks/degs).
+    Now we want ticks/in - multiply the result by 360 degs/circumference.
+    Flip it to get in/tick.
+
+    That is:  16 ticks      1 tick     102.08     360 degs
+                -----   =   ------   x ------- x  --------     = 86.646 ticks per in  = 0.0115 in per tick
+            360 degs     22.5 degs      1       18.85 in
+
+    If we upped the resolution to 64 ticks/resolution, you will notice that the in/tick will drop dramatically (by a factor of 4)!
+
+    The wheel radius for our robot has been determined to be 50 mm. Using the procedure above, we obtain the resolutions below.
+
+    * 31.42 (circumference in cm) *  22.5  / 360 / 102.08 =  0.0192 cm / tick  (.192 mm / tick) (51.98 ticks/cm)
+    31.42 (circumference in cm) *  5.625 / 360 / 102.08 = 0.0049 cm / tick  (.048 mm / tick)
+
+    It appears that with a 16 ticks/resolution, we get a good accuracy. As a result, let's define our system to use the rising edge of one encoder for each motor (16 ticks/motor revolution).
+
+    The next step is to test for precision.
+
+    As an aside, real world results of the tick resolution accuracy can vary. As a general rule, you can get more resolution by:
+        1 - take as much encoder resolution as you can
+        2 - use small wheels! You may move slower, but you will move more accurately.
 """
 import sys
 sys.path.append("..") # Adds higher directory to python modules path.
 import time
-import pins as p
+import pins
 import config
 try:
     import RPi.GPIO as GPIO
@@ -26,10 +51,10 @@ GPIO.setwarnings(False) # disable warnings from other drivers configuring other 
 
 # list of channels touched by encoders.
 chan_list = [
-    p.ENC_FR,
-    p.ENC_FL,
-    p.ENC_BL,
-    p.ENC_BR
+    pins.ENC_FR,
+    pins.ENC_FL,
+    pins.ENC_BL,
+    pins.ENC_BR
 ]
 
 """
@@ -48,41 +73,15 @@ def shutdown():
     print("Shutdown Encoders.")
     GPIO.cleanup(chan_list)
 
-"""
-Say we have a 3in. radius wheel - the circumference is 18.85in.
-Consider if we only get 16 ticks per revolution (only rise/fall of one encoder).
-We want to multiply the tick/degs by the motor gearing ratio (output ticks/degs).
-Now we want ticks/in - multiply the result by 360 degs/circumference.
-Flip it to get in/tick.
-
-That is:  16 ticks      1 tick     102.08     360 degs
-            -----   =   ------   x ------- x  --------     = 86.646 ticks per in  = 0.0115 in per tick
-          360 degs     22.5 degs      1       18.85 in
-
-If we upped the resolution to 64 ticks/resolution, you will notice that the in/tick will drop dramatically (by a factor of 4)!
-
-The wheel radius for our robot has been determined to be 50 mm. Using the procedure above, we obtain the resolutions below.
-
-31.42 (circumference in cm) *  22.5  / 360 / 102.08 =  0.019 cm / tick  (.19 mm / tick)
-31.42 (circumference in cm) *  5.625 / 360 / 102.08 = 0.0049 cm / tick  (.048 mm / tick)
-
-It appears that with a 16 tick/resolution, we get a good accuracy. As a result, let's define our system to use the rising edge of one encoder for each motor (16 ticks/motor revolution).
-
-The next step is to test for precision.
-
-As an aside, real world results of the tick resolution accuracy can vary. As a general rule, you can get more resolution by:
-    1 - take as much encoder resolution as you can
-    2 - use small wheels! You may move slower, but you will move more accurately.
-"""
 # increments a tick on the rising edge of an encoder pin.
 def encoderEventHandler(channel):
-    if channel is p.ENC_FR:
+    if channel is pins.ENC_FR:
         config.ENC_FR_count += 1
-    elif channel is p.ENC_FL:
+    elif channel is pins.ENC_FL:
         config.ENC_FL_count += 1
-    elif channel is p.ENC_BL:
+    elif channel is pins.ENC_BL:
         config.ENC_BL_count += 1
-    elif channel is p.ENC_BR:
+    elif channel is pins.ENC_BR:
         config.ENC_BR_count += 1
     else:
         print("Invalid channel: " + str(channel))

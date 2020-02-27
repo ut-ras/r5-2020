@@ -10,34 +10,52 @@ sys.path.append("../motor_controller/")
 
 import time as t
 import encoders
-import motor_controller as m
+import motor_controller
 import config
-
-
 
 # setup motor controller and encoders
 encoders.setup()
-m.setup(config.MOTOR_PWM_FREQ)
-m.set_speed(config.MOTOR_PWM_DUTY)
 
-# drive forward
-m.drive_forward(5) # 5 seconds
-print("Ticks: " + str(encoders.read(config.BACK_RIGHT))) # reading from encoder 1 (Front Right)
+freq = []
 
-# reset count
-encoders.reset(config.BACK_RIGHT)
-print("Ticks: " + str(encoders.read(config.BACK_RIGHT))) # should be reading 0 now
+# up freq and repeat
+for f in range(11): # 0-10
+    # modify freq
+    motor_controller.setup(config.MOTOR_PWM_FREQ*f)
+    
+    duty = []
+    # up duty and repeat
+    for d in range(11): # 0-10
+        # modify power
+        motor_controller.set_speed(config.MOTOR_PWM_DUTY*d)
+        
+        for i in range(5): # repeat trial 5 times
+            # drive forward
+            motor_controller.drive_forward(1) # 1 second
+            print("Ticks: " + str(encoders.read(config.BACK_RIGHT))) # reading from encoder Back Right
 
-# drive backward
-m.drive_backward(5)
-print("Ticks: " + str(encoders.read(config.BACK_RIGHT)))
+            # append to dataset
+            duty.append(
+                [config.MOTOR_PWM_DUTY*d, encoders.read(config.BACK_RIGHT)]
+                )
+            # reset ticks
+            encoders.reset(config.BACK_RIGHT)
+    
+    # append to dataset
+    freq.append(
+        [config.MOTOR_PWM_FREQ*f, duty]
+        )
 
-# move fwd 5 cm
-encoders.reset(config.BACK_RIGHT)
-m.drive_forward(5)
-print("Ticks: " + str(encoders.read(config.BACK_RIGHT)))
+    # restart motor controller
+    motor_controller.shutdown()
+
+# display result
+for freqEntry in freq:
+    for dutyEntry in freqEntry[1]:
+        for entry in dutyEntry[1]:
+            print(freqEntry[0] + "\t|\t" + dutyEntry[0] + "\t|\t" + entry)
 
 
 # shutdown
 encoders.shutdown()
-m.shutdown()
+# motor_controller.shutdown()

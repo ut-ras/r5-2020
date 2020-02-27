@@ -25,9 +25,9 @@ Notes:
 import sys
 sys.path.append("..") # Adds higher directory to python modules path.
 import time
-import pins as p
+import pins
 import config
-import encoders as e
+import encoders
 try:
     import RPi.GPIO as GPIO
 except RuntimeError:
@@ -38,21 +38,21 @@ GPIO.setwarnings(False) # disable warnings from other drivers configuring other 
 
 # list of channels touched by motor controller.
 chan_list = [
-    p.INA_FR,    # Motor Driver 1 (Front Right)
-    p.INB_FR,
-    p.INA_FL,    # Motor Driver 2 (Front Left)
-    p.INB_FL,
-    p.INA_BL,    # Motor Driver 3 (Back Left)
-    p.INB_BL,
-    p.INA_BR,    # Motor Driver 4 (Back Right)
-    p.INB_BR
+    pins.INA_FR,    # Motor Driver 1 (Front Right)
+    pins.INB_FR,
+    pins.INA_FL,    # Motor Driver 2 (Front Left)
+    pins.INB_FL,
+    pins.INA_BL,    # Motor Driver 3 (Back Left)
+    pins.INB_BL,
+    pins.INA_BR,    # Motor Driver 4 (Back Right)
+    pins.INB_BR
 ]
 # other channels touched, but these are PWM channels
 pwm_list = [
-    p.PWM0_FR,
-    p.PWM0_BL,
-    p.PWM1_FL,
-    p.PWM1_BR
+    pins.PWM0_FR,
+    pins.PWM0_BL,
+    pins.PWM1_FL,
+    pins.PWM1_BR
 ]
 # pwm instances to drive motor controllers
 pwms = []
@@ -91,16 +91,16 @@ def drive_forward(s):
     # left side goes clockwise
     # right side goes counter clockwise
     on = [
-        p.INA_FL, # left side
-        p.INA_BL,
-        p.INB_FR, # right side
-        p.INB_BR
+        pins.INA_FL, # left side
+        pins.INA_BL,
+        pins.INB_FR, # right side
+        pins.INB_BR
     ]
     off = [
-        p.INB_FL, # left side
-        p.INB_BL,
-        p.INA_FR, # right side
-        p.INA_BR
+        pins.INB_FL, # left side
+        pins.INB_BL,
+        pins.INA_FR, # right side
+        pins.INA_BR
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
@@ -112,16 +112,16 @@ def drive_backward(s):
     # left side goes counter clockwise
     # right side goes clockwise
     off = [
-        p.INA_FL, # left side
-        p.INA_BL,
-        p.INB_FR, # right side
-        p.INB_BR
+        pins.INA_FL, # left side
+        pins.INA_BL,
+        pins.INB_FR, # right side
+        pins.INB_BR
     ]
     on = [
-        p.INB_FL, # left side
-        p.INB_BL,
-        p.INA_FR, # right side
-        p.INA_BR
+        pins.INB_FL, # left side
+        pins.INB_BL,
+        pins.INA_FR, # right side
+        pins.INA_BR
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
@@ -131,16 +131,16 @@ def drive_backward(s):
 # Base moves to the right until s seconds have passed.
 def drive_right(s):
     on = [
-        p.INA_FR, # front side
-        p.INA_FL,
-        p.INB_BL, # back side
-        p.INB_BR
+        pins.INA_FR, # front side
+        pins.INA_FL,
+        pins.INB_BL, # back side
+        pins.INB_BR
     ]
     off = [
-        p.INB_FR, # front side
-        p.INB_FL,
-        p.INA_BL, # back side
-        p.INA_BR
+        pins.INB_FR, # front side
+        pins.INB_FL,
+        pins.INA_BL, # back side
+        pins.INA_BR
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
@@ -150,16 +150,16 @@ def drive_right(s):
 # Base moves to the left until s seconds have passed.
 def drive_left(s):
     off = [
-        p.INA_FR, # front side
-        p.INA_FL,
-        p.INB_BL, # back side
-        p.INB_BR
+        pins.INA_FR, # front side
+        pins.INA_FL,
+        pins.INB_BL, # back side
+        pins.INB_BR
     ]
     on = [
-        p.INB_FR, # front side
-        p.INB_FL,
-        p.INA_BL, # back side
-        p.INA_BR
+        pins.INB_FR, # front side
+        pins.INB_FL,
+        pins.INA_BL, # back side
+        pins.INA_BR
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
@@ -169,16 +169,16 @@ def drive_left(s):
 # Base moves forward left until s seconds have passed.
 def drive_forward_left(s):
     on = [
-        p.INB_FR,
-        p.INA_BL
+        pins.INB_FR,
+        pins.INA_BL
     ]
     off = [
-        p.INA_FR,
-        p.INA_FL,
-        p.INB_FL,
-        p.INB_BL,
-        p.INA_BR,
-        p.INB_BR
+        pins.INA_FR,
+        pins.INA_FL,
+        pins.INB_FL,
+        pins.INB_BL,
+        pins.INA_BR,
+        pins.INB_BR
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
@@ -188,16 +188,16 @@ def drive_forward_left(s):
 # Base moves forward right until s seconds have passed.
 def drive_forward_right(s):
     on = [
-        p.INA_FL,
-        p.INB_BR
+        pins.INA_FL,
+        pins.INB_BR
     ]
     off = [
-        p.INA_FR,
-        p.INB_FR,
-        p.INB_FL,
-        p.INA_BL,
-        p.INB_BL,
-        p.INA_BR
+        pins.INA_FR,
+        pins.INB_FR,
+        pins.INB_FL,
+        pins.INA_BL,
+        pins.INB_BL,
+        pins.INA_BR
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
@@ -207,16 +207,16 @@ def drive_forward_right(s):
 # Base moves backward left until s seconds have passed.
 def drive_backward_left(s):
     on = [
-        p.INB_FL,
-        p.INA_BR
+        pins.INB_FL,
+        pins.INA_BR
     ]
     off = [
-        p.INA_FR,
-        p.INB_FR,
-        p.INA_FL,
-        p.INA_BL,
-        p.INB_BL,
-        p.INB_BR
+        pins.INA_FR,
+        pins.INB_FR,
+        pins.INA_FL,
+        pins.INA_BL,
+        pins.INB_BL,
+        pins.INB_BR
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
@@ -226,16 +226,16 @@ def drive_backward_left(s):
 # Base moves backward right until s seconds have passed.
 def drive_backward_right(s):
     on = [
-        p.INA_FR,
-        p.INB_BL
+        pins.INA_FR,
+        pins.INB_BL
     ]
     off = [
-        p.INB_FR,
-        p.INA_FL,
-        p.INB_FL,
-        p.INA_BL,
-        p.INA_BR,
-        p.INB_BR
+        pins.INB_FR,
+        pins.INA_FL,
+        pins.INB_FL,
+        pins.INA_BL,
+        pins.INA_BR,
+        pins.INB_BR
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
@@ -246,16 +246,16 @@ def drive_backward_right(s):
 def drive_rotate_left(s):
     # all wheels go CCW
     on = [
-        p.INB_FL, # left side
-        p.INB_BL,
-        p.INB_FR, # right side
-        p.INB_BR
+        pins.INB_FL, # left side
+        pins.INB_BL,
+        pins.INB_FR, # right side
+        pins.INB_BR
     ]
     off = [
-        p.INA_FL, # left side
-        p.INA_BL,
-        p.INA_FR, # right side
-        p.INA_BR
+        pins.INA_FL, # left side
+        pins.INA_BL,
+        pins.INA_FR, # right side
+        pins.INA_BR
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
@@ -266,16 +266,16 @@ def drive_rotate_left(s):
 def drive_rotate_right(s):
     # all wheels go CW
     on = [
-        p.INA_FL, # left side
-        p.INA_BL,
-        p.INA_FR, # right side
-        p.INA_BR
+        pins.INA_FL, # left side
+        pins.INA_BL,
+        pins.INA_FR, # right side
+        pins.INA_BR
     ]
     off = [
-        p.INB_FL, # left side
-        p.INB_BL,
-        p.INB_FR, # right side
-        p.INB_BR
+        pins.INB_FL, # left side
+        pins.INB_BL,
+        pins.INB_FR, # right side
+        pins.INB_BR
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
@@ -299,20 +299,20 @@ def drive_forward_t(d):
     # left side goes clockwise
     # right side goes counter clockwise
     on = [
-        p.INA_FL, # left side
-        p.INA_BL,
-        p.INB_FR, # right side
-        p.INB_BR
+        pins.INA_FL, # left side
+        pins.INA_BL,
+        pins.INB_FR, # right side
+        pins.INB_BR
     ]
     off = [
-        p.INB_FL, # left side
-        p.INB_BL,
-        p.INA_FR, # right side
-        p.INA_BR
+        pins.INB_FL, # left side
+        pins.INB_BL,
+        pins.INA_FR, # right side
+        pins.INA_BR
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
-    target = config.TICKS_PER_CM*d # TODO: this value should change based on independent experiments.
+    target = config.TICKS_PER_CM*d
     # poll until the avg ticks of all motors reaches expected tick count
     while(getAvgTicks() < target):
         pass
@@ -323,20 +323,20 @@ def drive_backward_t(d):
     # left side goes counter clockwise
     # right side goes clockwise
     off = [
-        p.INA_FL, # left side
-        p.INA_BL,
-        p.INB_FR, # right side
-        p.INB_BR
+        pins.INA_FL, # left side
+        pins.INA_BL,
+        pins.INB_FR, # right side
+        pins.INB_BR
     ]
     on = [
-        p.INB_FL, # left side
-        p.INB_BL,
-        p.INA_FR, # right side
-        p.INA_BR
+        pins.INB_FL, # left side
+        pins.INB_BL,
+        pins.INA_FR, # right side
+        pins.INA_BR
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
-    target = config.TICKS_PER_CM*d # TODO: this value should change based on independent experiments.
+    target = config.TICKS_PER_CM*d
     # poll until the avg ticks of all motors reaches expected tick count
     while(getAvgTicks() < target):
         pass
@@ -345,20 +345,20 @@ def drive_backward_t(d):
 # Base moves to the right until d ticks have passed.
 def drive_right_t(d):
     on = [
-        p.INA_FR, # front side
-        p.INA_FL,
-        p.INB_BL, # back side
-        p.INB_BR
+        pins.INA_FR, # front side
+        pins.INA_FL,
+        pins.INB_BL, # back side
+        pins.INB_BR
     ]
     off = [
-        p.INB_FR, # front side
-        p.INB_FL,
-        p.INA_BL, # back side
-        p.INA_BR
+        pins.INB_FR, # front side
+        pins.INB_FL,
+        pins.INA_BL, # back side
+        pins.INA_BR
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
-    target = config.TICKS_PER_CM*d # TODO: this value should change based on independent experiments.
+    target = config.TICKS_PER_CM*d
     # poll until the avg ticks of all motors reaches expected tick count
     while(getAvgTicks() < target):
         pass
@@ -367,20 +367,20 @@ def drive_right_t(d):
 # Base moves to the left until d ticks have passed.
 def drive_left_t(d):
     off = [
-        p.INA_FR, # front side
-        p.INA_FL,
-        p.INB_BL, # back side
-        p.INB_BR
+        pins.INA_FR, # front side
+        pins.INA_FL,
+        pins.INB_BL, # back side
+        pins.INB_BR
     ]
     on = [
-        p.INB_FR, # front side
-        p.INB_FL,
-        p.INA_BL, # back side
-        p.INA_BR
+        pins.INB_FR, # front side
+        pins.INB_FL,
+        pins.INA_BL, # back side
+        pins.INA_BR
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
-    target = config.TICKS_PER_CM*d # TODO: this value should change based on independent experiments.
+    target = config.TICKS_PER_CM*d
     # poll until the avg ticks of all motors reaches expected tick count
     while(getAvgTicks() < target):
         pass
@@ -389,20 +389,20 @@ def drive_left_t(d):
 # Base moves forward left until d ticks have passed.
 def drive_forward_left_t(d):
     on = [
-        p.INB_FR,
-        p.INA_BL
+        pins.INB_FR,
+        pins.INA_BL
     ]
     off = [
-        p.INA_FR,
-        p.INA_FL,
-        p.INB_FL,
-        p.INB_BL,
-        p.INA_BR,
-        p.INB_BR
+        pins.INA_FR,
+        pins.INA_FL,
+        pins.INB_FL,
+        pins.INB_BL,
+        pins.INA_BR,
+        pins.INB_BR
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
-    target = config.TICKS_PER_CM*d # TODO: this value should change based on independent experiments.
+    target = config.TICKS_PER_CM*d
     # poll until the avg ticks of all motors reaches expected tick count
     while(getAvgTicks() < target):
         pass
@@ -411,20 +411,20 @@ def drive_forward_left_t(d):
 # Base moves forward right until d ticks have passed.
 def drive_forward_right_t(d):
     on = [
-        p.INA_FL,
-        p.INB_BR
+        pins.INA_FL,
+        pins.INB_BR
     ]
     off = [
-        p.INA_FR,
-        p.INB_FR,
-        p.INB_FL,
-        p.INA_BL,
-        p.INB_BL,
-        p.INA_BR
+        pins.INA_FR,
+        pins.INB_FR,
+        pins.INB_FL,
+        pins.INA_BL,
+        pins.INB_BL,
+        pins.INA_BR
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
-    target = config.TICKS_PER_CM*d # TODO: this value should change based on independent experiments.
+    target = config.TICKS_PER_CM*d
     # poll until the avg ticks of all motors reaches expected tick count
     while(getAvgTicks() < target):
         pass
@@ -433,20 +433,20 @@ def drive_forward_right_t(d):
 # Base moves backward left until d ticks have passed.
 def drive_backward_left_t(d):
     on = [
-        p.INB_FL,
-        p.INA_BR
+        pins.INB_FL,
+        pins.INA_BR
     ]
     off = [
-        p.INA_FR,
-        p.INB_FR,
-        p.INA_FL,
-        p.INA_BL,
-        p.INB_BL,
-        p.INB_BR
+        pins.INA_FR,
+        pins.INB_FR,
+        pins.INA_FL,
+        pins.INA_BL,
+        pins.INB_BL,
+        pins.INB_BR
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
-    target = config.TICKS_PER_CM*d # TODO: this value should change based on independent experiments.
+    target = config.TICKS_PER_CM*d
     # poll until the avg ticks of all motors reaches expected tick count
     while(getAvgTicks() < target):
         pass
@@ -455,20 +455,20 @@ def drive_backward_left_t(d):
 # Base moves backward right until d ticks have passed.
 def drive_backward_right_t(d):
     on = [
-        p.INA_FR,
-        p.INB_BL
+        pins.INA_FR,
+        pins.INB_BL
     ]
     off = [
-        p.INB_FR,
-        p.INA_FL,
-        p.INB_FL,
-        p.INA_BL,
-        p.INA_BR,
-        p.INB_BR
+        pins.INB_FR,
+        pins.INA_FL,
+        pins.INB_FL,
+        pins.INA_BL,
+        pins.INA_BR,
+        pins.INB_BR
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
-    target = config.TICKS_PER_CM*d # TODO: this value should change based on independent experiments.
+    target = config.TICKS_PER_CM*d
     # poll until the avg ticks of all motors reaches expected tick count
     while(getAvgTicks() < target):
         pass
@@ -478,20 +478,20 @@ def drive_backward_right_t(d):
 def drive_rotate_left_t(d):
     # all wheels go CCW
     on = [
-        p.INB_FL, # left side
-        p.INB_BL,
-        p.INB_FR, # right side
-        p.INB_BR
+        pins.INB_FL, # left side
+        pins.INB_BL,
+        pins.INB_FR, # right side
+        pins.INB_BR
     ]
     off = [
-        p.INA_FL, # left side
-        p.INA_BL,
-        p.INA_FR, # right side
-        p.INA_BR
+        pins.INA_FL, # left side
+        pins.INA_BL,
+        pins.INA_FR, # right side
+        pins.INA_BR
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
-    target = config.TICKS_PER_CM*d # TODO: this value should change based on independent experiments.
+    target = config.TICKS_PER_CM*d
     # poll until the avg ticks of all motors reaches expected tick count
     while(getAvgTicks() < target):
         pass
@@ -501,20 +501,20 @@ def drive_rotate_left_t(d):
 def drive_rotate_right_t(d):
     # all wheels go CW
     on = [
-        p.INA_FL, # left side
-        p.INA_BL,
-        p.INA_FR, # right side
-        p.INA_BR
+        pins.INA_FL, # left side
+        pins.INA_BL,
+        pins.INA_FR, # right side
+        pins.INA_BR
     ]
     off = [
-        p.INB_FL, # left side
-        p.INB_BL,
-        p.INB_FR, # right side
-        p.INB_BR
+        pins.INB_FL, # left side
+        pins.INB_BL,
+        pins.INB_FR, # right side
+        pins.INB_BR
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
-    target = config.TICKS_PER_CM*d # TODO: this value should change based on independent experiments.
+    target = config.TICKS_PER_CM*d
     # poll until the avg ticks of all motors reaches expected tick count
     while(getAvgTicks() < target):
         pass
@@ -523,7 +523,7 @@ def drive_rotate_right_t(d):
 # stops movement of motors by braking to GND
 def stop_t():
     for i in range(4):
-        e.reset(i)
+        encoders.reset(i)
     GPIO.output(chan_list, GPIO.LOW)
 
 # assuming we only move in cardinal and extracardinal ways
