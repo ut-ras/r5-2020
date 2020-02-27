@@ -2,7 +2,7 @@
 This file contains the interface for reading the encoders on the 37D Metal Gearmotors.
 Filename: encoders.py
 Author: Matthew Yu
-Last Modified: 2/21/20
+Last Modified: 2/26/20
 Notes:
     * Motor Datasheet: https://www.pololu.com/file/0J1736/pololu-37d-metal-gearmotors-rev-1-2.pdf
     * A possible solution to read ticks is to interrupt on high and increment a counter.
@@ -15,7 +15,7 @@ import sys
 sys.path.append("..") # Adds higher directory to python modules path.
 import time
 import pins as p
-import config as c
+import config
 try:
     import RPi.GPIO as GPIO
 except RuntimeError:
@@ -77,17 +77,13 @@ As an aside, real world results of the tick resolution accuracy can vary. As a g
 # increments a tick on the rising edge of an encoder pin.
 def encoderEventHandler(channel):
     if channel is p.ENC_FR:
-        global c.ENC1_count
-        c.ENC1_count += 1
+        config.ENC1_count += 1
     elif channel is p.ENC_FL:
-        global c.ENC2_count
-        c.ENC2_count += 1
+        config.ENC2_count += 1
     elif channel is p.ENC_BL:
-        global c.ENC3_count
-        c.ENC3_count += 1
+        config.ENC3_count += 1
     elif channel is p.ENC_BR:
-        global c.ENC4_count
-        c.ENC4_count += 1
+        config.ENC4_count += 1
     else:
         print("Invalid channel: " + str(channel))
         print("Choose a value between [1, 4].")
@@ -96,13 +92,13 @@ def encoderEventHandler(channel):
 # use: when you want to know ticks after moving (and therefore to calculate distance).
 def read(enc_val):
     if enc_val is 1:
-        return c.ENC1_count
+        return config.ENC1_count
     elif enc_val is 2:
-        return c.ENC2_count
+        return config.ENC2_count
     elif enc_val is 3:
-        return c.ENC3_count
+        return config.ENC3_count
     elif enc_val is 4:
-        return c.ENC4_count
+        return config.ENC4_count
     else:
         print("Invalid read enc_val: " + str(enc_val))
         print("Choose a value between [1, 4].")
@@ -111,17 +107,13 @@ def read(enc_val):
 # use: when changing direction and ENCx_count is no longer useful.
 def reset(enc_val):
     if enc_val is 1:
-        global c.ENC1_count
-        c.ENC1_count = 0
+        config.ENC1_count = 0
     elif enc_val is 2:
-        global c.ENC2_count
-        c.ENC2_count = 0
+        config.ENC2_count = 0
     elif enc_val is 3:
-        global c.ENC3_count
-        c.ENC3_count = 0
+        config.ENC3_count = 0
     elif enc_val is 4:
-        global c.ENC4_count
-        c.ENC4_count = 0
+        config.ENC4_count = 0
     else:
         print("Invalid reset enc_val: " + str(enc_val))
         print("Choose a value between [1, 4].")

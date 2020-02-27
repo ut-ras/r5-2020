@@ -11,14 +11,14 @@ sys.path.append("../motor_controller/")
 import time as t
 import encoders as e
 import motor_controller as m
+import config
 
-MOTOR_PWM_FREQ=200 # change these
-MOTOR_PWM_DUTY=100.0
+
 
 # setup motor controller and encoders
 e.setup()
-m.setup(MOTOR_PWM_FREQ)
-m.set_speed(MOTOR_PWM_DUTY)
+m.setup(config.MOTOR_PWM_FREQ)
+m.set_speed(config.MOTOR_PWM_DUTY)
 
 # drive forward
 m.drive_forward(5) # 5 seconds

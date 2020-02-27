@@ -2,7 +2,7 @@
 This file contains the interface for driving the VNH5019A-E motor driver.
 Filename: motor_controller.py
 Author: Matthew Yu
-Last Modified: 2/21/20
+Last Modified: 2/26/20
 Notes:
     * How a Mecanum Drive Works: https://seamonsters-2605.github.io/archive/mecanum/
     * Driving a PWM pin in RPi.GPIO: https://sourceforge.net/p/raspberry-gpio-python/wiki/PWM/
@@ -26,7 +26,7 @@ import sys
 sys.path.append("..") # Adds higher directory to python modules path.
 import time
 import pins as p
-import config as c
+import config
 import encoders as e
 try:
     import RPi.GPIO as GPIO
@@ -312,7 +312,7 @@ def drive_forward_t(d):
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
-    target = c.TICKS_PER_CM*d # TODO: this value should change based on independent experiments.
+    target = config.TICKS_PER_CM*d # TODO: this value should change based on independent experiments.
     # poll until the avg ticks of all motors reaches expected tick count
     while(getAvgTicks() < target):
         pass
@@ -336,7 +336,7 @@ def drive_backward_t(d):
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
-    target = c.TICKS_PER_CM*d # TODO: this value should change based on independent experiments.
+    target = config.TICKS_PER_CM*d # TODO: this value should change based on independent experiments.
     # poll until the avg ticks of all motors reaches expected tick count
     while(getAvgTicks() < target):
         pass
@@ -358,7 +358,7 @@ def drive_right_t(d):
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
-    target = c.TICKS_PER_CM*d # TODO: this value should change based on independent experiments.
+    target = config.TICKS_PER_CM*d # TODO: this value should change based on independent experiments.
     # poll until the avg ticks of all motors reaches expected tick count
     while(getAvgTicks() < target):
         pass
@@ -380,7 +380,7 @@ def drive_left_t(d):
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
-    target = c.TICKS_PER_CM*d # TODO: this value should change based on independent experiments.
+    target = config.TICKS_PER_CM*d # TODO: this value should change based on independent experiments.
     # poll until the avg ticks of all motors reaches expected tick count
     while(getAvgTicks() < target):
         pass
@@ -402,7 +402,7 @@ def drive_forward_left_t(d):
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
-    target = c.TICKS_PER_CM*d # TODO: this value should change based on independent experiments.
+    target = config.TICKS_PER_CM*d # TODO: this value should change based on independent experiments.
     # poll until the avg ticks of all motors reaches expected tick count
     while(getAvgTicks() < target):
         pass
@@ -424,7 +424,7 @@ def drive_forward_right_t(d):
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
-    target = c.TICKS_PER_CM*d # TODO: this value should change based on independent experiments.
+    target = config.TICKS_PER_CM*d # TODO: this value should change based on independent experiments.
     # poll until the avg ticks of all motors reaches expected tick count
     while(getAvgTicks() < target):
         pass
@@ -446,7 +446,7 @@ def drive_backward_left_t(d):
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
-    target = c.TICKS_PER_CM*d # TODO: this value should change based on independent experiments.
+    target = config.TICKS_PER_CM*d # TODO: this value should change based on independent experiments.
     # poll until the avg ticks of all motors reaches expected tick count
     while(getAvgTicks() < target):
         pass
@@ -468,7 +468,7 @@ def drive_backward_right_t(d):
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
-    target = c.TICKS_PER_CM*d # TODO: this value should change based on independent experiments.
+    target = config.TICKS_PER_CM*d # TODO: this value should change based on independent experiments.
     # poll until the avg ticks of all motors reaches expected tick count
     while(getAvgTicks() < target):
         pass
@@ -491,7 +491,7 @@ def drive_rotate_left_t(d):
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
-    target = c.TICKS_PER_CM*d # TODO: this value should change based on independent experiments.
+    target = config.TICKS_PER_CM*d # TODO: this value should change based on independent experiments.
     # poll until the avg ticks of all motors reaches expected tick count
     while(getAvgTicks() < target):
         pass
@@ -514,7 +514,7 @@ def drive_rotate_right_t(d):
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
-    target = c.TICKS_PER_CM*d # TODO: this value should change based on independent experiments.
+    target = config.TICKS_PER_CM*d # TODO: this value should change based on independent experiments.
     # poll until the avg ticks of all motors reaches expected tick count
     while(getAvgTicks() < target):
         pass
@@ -528,7 +528,7 @@ def stop_t():
 
 # assuming we only move in cardinal and extracardinal ways
 def getAvgTicks():
-    return (c.ENC1_count + c.ENC2_count + c.ENC3_count + c.ENC4_count) / 4
+    return (config.ENC1_count + config.ENC2_count + config.ENC3_count + config.ENC4_count) / 4
 
 def getAvgTicksRotate(mode):
     if(mode is 0): # rotate right, TODO: x and x motors are stationary
