@@ -19,7 +19,7 @@ encoders.setup()
 freq = []
 
 # up freq and repeat
-for f in range(11): # 0-10
+for f in range(1,11): # 1-10
     # modify freq
     motor_controller.setup(config.MOTOR_PWM_FREQ*f)
     
@@ -31,15 +31,15 @@ for f in range(11): # 0-10
         
         for i in range(5): # repeat trial 5 times
             # drive forward
-            motor_controller.drive_forward(1) # 1 second
-            print("Ticks: " + str(encoders.read(config.BACK_RIGHT))) # reading from encoder Back Right
+            motor_controller.drive_forward(.5) # 1 second
+            print("Ticks: " + str(encoders.read(config.FRONT_LEFT))) # reading from encoder Back Right
 
             # append to dataset
             duty.append(
-                [config.MOTOR_PWM_DUTY*d, encoders.read(config.BACK_RIGHT)]
+                [config.MOTOR_PWM_DUTY*d, encoders.read(config.FRONT_LEFT)]
                 )
             # reset ticks
-            encoders.reset(config.BACK_RIGHT)
+            encoders.reset(config.FRONT_LEFT)
     
     # append to dataset
     freq.append(
