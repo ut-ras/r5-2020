@@ -296,6 +296,7 @@ Notes:
 # All wheels go forward until d ticks have passed
 # d in ticks,
 def drive_forward_t(d):
+    config.lock = True
     # left side goes clockwise
     # right side goes counter clockwise
     on = [
@@ -312,11 +313,14 @@ def drive_forward_t(d):
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
-    target = config.TICKS_PER_CM*d
+
+    target = d
     # poll until the avg ticks of all motors reaches expected tick count
-    while(getAvgTicks() < target):
+    while(encoders.read(config.FRONT_LEFT) < target):
         pass
+
     stop_t()
+    config.lock = False
 
 # All wheels go backward until d ticks have passed.
 def drive_backward_t(d):
@@ -522,7 +526,7 @@ def drive_rotate_right_t(d):
 
 # stops movement of motors by braking to GND
 def stop_t():
-    for i in range(4):
+    for i in range(1, 5):
         encoders.reset(i)
     GPIO.output(chan_list, GPIO.LOW)
 

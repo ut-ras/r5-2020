@@ -9,8 +9,8 @@ Usage:
 """
 TICKS_PER_CM = 51.98 # see encoders.py, based on a 50mm. radius wheel and 16 ticks per revolution.
 
-MOTOR_PWM_FREQ=10 # change these
-MOTOR_PWM_DUTY=10.0
+MOTOR_PWM_FREQ=250
+MOTOR_PWM_DUTY=70.0
 
 FRONT_RIGHT=1
 FRONT_LEFT=2
@@ -23,3 +23,5 @@ ENC_FR_count = 0
 ENC_FL_count = 0
 ENC_BL_count = 0
 ENC_BR_count = 0
+
+lock = False
