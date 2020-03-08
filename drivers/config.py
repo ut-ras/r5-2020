@@ -8,9 +8,12 @@ Usage:
     config.emergency_stop = False (stop_button.py)
 """
 TICKS_PER_CM = 51.98 # see encoders.py, based on a 50mm. radius wheel and 16 ticks per revolution.
+TICKS_SCALE = .5
+TICKS_OFFSET = 10.6
+
 
 MOTOR_PWM_FREQ=250
-MOTOR_PWM_DUTY=70.0
+MOTOR_PWM_DUTY=80.0
 
 FRONT_RIGHT=1
 FRONT_LEFT=2

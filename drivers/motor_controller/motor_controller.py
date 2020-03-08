@@ -314,9 +314,9 @@ def drive_forward_t(d):
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
 
-    target = d
+    target = getTargetTicks(d)
     # poll until the avg ticks of all motors reaches expected tick count
-    while(encoders.read(config.FRONT_LEFT) < target):
+    while(getAvgTicks() < target):
         pass
 
     stop_t()
@@ -340,7 +340,7 @@ def drive_backward_t(d):
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
-    target = config.TICKS_PER_CM*d
+    target = getTargetTicks(d)
     # poll until the avg ticks of all motors reaches expected tick count
     while(getAvgTicks() < target):
         pass
@@ -362,7 +362,7 @@ def drive_right_t(d):
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
-    target = config.TICKS_PER_CM*d
+    target = getTargetTicks(d)
     # poll until the avg ticks of all motors reaches expected tick count
     while(getAvgTicks() < target):
         pass
@@ -384,7 +384,7 @@ def drive_left_t(d):
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
-    target = config.TICKS_PER_CM*d
+    target = getTargetTicks(d)
     # poll until the avg ticks of all motors reaches expected tick count
     while(getAvgTicks() < target):
         pass
@@ -406,7 +406,7 @@ def drive_forward_left_t(d):
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
-    target = config.TICKS_PER_CM*d
+    target = getTargetTicks(d)
     # poll until the avg ticks of all motors reaches expected tick count
     while(getAvgTicks() < target):
         pass
@@ -428,7 +428,7 @@ def drive_forward_right_t(d):
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
-    target = config.TICKS_PER_CM*d
+    target = getTargetTicks(d)
     # poll until the avg ticks of all motors reaches expected tick count
     while(getAvgTicks() < target):
         pass
@@ -450,7 +450,7 @@ def drive_backward_left_t(d):
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
-    target = config.TICKS_PER_CM*d
+    target = getTargetTicks(d)
     # poll until the avg ticks of all motors reaches expected tick count
     while(getAvgTicks() < target):
         pass
@@ -472,7 +472,7 @@ def drive_backward_right_t(d):
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
-    target = config.TICKS_PER_CM*d
+    target = getTargetTicks(d)
     # poll until the avg ticks of all motors reaches expected tick count
     while(getAvgTicks() < target):
         pass
@@ -495,7 +495,7 @@ def drive_rotate_left_t(d):
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
-    target = config.TICKS_PER_CM*d
+    target = getTargetTicks(d)
     # poll until the avg ticks of all motors reaches expected tick count
     while(getAvgTicks() < target):
         pass
@@ -518,7 +518,7 @@ def drive_rotate_right_t(d):
     ]
     GPIO.output(on, GPIO.HIGH)
     GPIO.output(off, GPIO.LOW)
-    target = config.TICKS_PER_CM*d
+    target = getTargetTicks(d)
     # poll until the avg ticks of all motors reaches expected tick count
     while(getAvgTicks() < target):
         pass
@@ -532,7 +532,7 @@ def stop_t():
 
 # assuming we only move in cardinal and extracardinal ways
 def getAvgTicks():
-    return (config.ENC1_count + config.ENC2_count + config.ENC3_count + config.ENC4_count) / 4
+    return (config.ENC_FR_count + config.ENC_FL_count + config.ENC_BL_count + config.ENC_BR_count) / 4
 
 def getAvgTicksRotate(mode):
     if(mode is 0): # rotate right, TODO: x and x motors are stationary
@@ -541,3 +541,7 @@ def getAvgTicksRotate(mode):
         pass
     else:
         print("Invalid rotation mode: " + str(mode))
+
+# d - distance in cm
+def getTargetTicks(d):
+    return int((d*10-config.TICKS_OFFSET)/config.TICKS_SCALE)
