@@ -29,31 +29,26 @@ INA | INB | MODE
  0  |  1  | Counterclockwise
  0  |  0  | Brake to GND
 """
-INA1 = 14      # IN A port on Motor Driver (1). 
-INB1 = 15      # IN B port on Motor Driver (1)
-INA2 = 26      # IN A port on Motor Driver (2)
-INB2 = 16      # IN B port on Motor Driver (2)
-INA3 = 23      # IN A port on Motor Driver (3)
-INB3 = 24      # IN B port on Motor Driver (3)
-INA4 = 20      # IN A port on Motor Driver (4)
-INB4 = 21      # IN B port on Motor Driver (4)
+INA_FR = 14      # IN A port on Motor Driver (1). 
+INB_FR = 15      # IN B port on Motor Driver (1)
+INA_FL = 26      # IN A port on Motor Driver (2)
+INB_FL = 16      # IN B port on Motor Driver (2)
+INA_BL = 23      # IN A port on Motor Driver (3)
+INB_BL = 24      # IN B port on Motor Driver (3)
+INA_BR = 20      # IN A port on Motor Driver (4)
+INB_BR = 21      # IN B port on Motor Driver (4)
 """
 PWM pins
 """
-PWM0_1 = 18      # Motor Driver  (1)
-PWM0_3 = 12      # Motor Driver  (3)
-PWM1_2 = 13      # Motor Driver  (2)
-PWM1_4 = 19      # Motor Driver  (4)
+PWM0_FR = 18
+PWM1_FL = 13
+PWM0_BL = 12
+PWM1_BR = 19
 
 """
 Encoder pins
 """
-AOUT1 = 2       # Encoder AOUT (1)
-BOUT1 = 3       # Encoder BOUT (1)
-AOUT2 = 4       # Encoder AOUT (2)
-BOUT2 = 17      # Encoder BOUT (2)
-AOUT3 = 27      # Encoder AOUT (3)
-BOUT3 = 22      # Encoder BOUT (3)
-AOUT4 = 10      # Encoder AOUT (4)
-BOUT4 = 9       # Encoder BOUT (4)
-
+ENC_FR = 2
+ENC_FL = 3
+ENC_BL = 17
+ENC_BR = 27
